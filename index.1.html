@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<title>Daily UI - Day 1 Sign In</title>
+
+	<!-- Google Fonts -->
+	<link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700|Lato:400,100,300,700,900' rel='stylesheet' type='text/css'>
+
+	<link rel="stylesheet" href="css/animate.css">
+	<!-- Custom Stylesheet -->
+	<link rel="stylesheet" href="css/style.css">
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+</head>
+
+<body>
+	<h1> Thanks For Confirming Your Email!!!</h1>
+	<a href="index.html"><button> Go to Login</button> </a>
+</body>
+
+<script src="https://s3.amazonaws.com/stitch-sdks/js/library/v3/stable/stitch.min.js"></script>
+<script>
+  // ... logic to parse token and tokenId
+	var url_raw = window.location.href;
+	var url = new URL(url_raw);
+	var token = url.searchParams.get("token");
+	var tokenId = url.searchParams.get("tokenId");
+	const clientPromise = stitch.StitchClientFactory.create('loginpage-hxdge');
+	clientPromise.then(client => {
+		const db = client.service('mongodb', 'mongodb-atlas').db('WebsiteDB');
+		client.auth.provider('userpass').emailConfirm(tokenId, token)
+		.then(() => {
+			console.log("Successfully confirmed email address!");
+			/* code to direct user to log in with their newly confirmed account */
+		})
+		.catch(err => {
+			console.log("Error confirming email address:", err);
+		});
+	});
+</script>
+
+</html>

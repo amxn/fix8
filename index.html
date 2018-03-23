@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<title>Daily UI - Day 1 Sign In</title>
+
+	<!-- Google Fonts -->
+	<link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700|Lato:400,100,300,700,900' rel='stylesheet' type='text/css'>
+
+	<link rel="stylesheet" href="css/animate.css">
+	<!-- Custom Stylesheet -->
+	<link rel="stylesheet" href="css/style.css">
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+</head>
+
+<body>
+	<div class="container">
+		<div class="top">
+			<h1 id="title" class="hidden"><span id="logo">Daily <span>UI</span></span></h1>
+		</div>
+		<div class="login-box animated fadeInUp">
+			<div class="box-header">
+				<h2>Register</h2>
+			</div>
+			<label for="username">Username</label>
+			<br/>
+			<input type="text" id="username">
+			<br/>
+			<label for="password">Password</label>
+			<br/>
+			<input type="password" id="password">
+			<br/>
+			<button type="submit" onclick=register()>Register</button>
+			<br/>
+			<button type="submit" onclick=login()>Login</button>
+			<br/>
+			<a href="#"><p class="small">Forgot your password?</p></a>
+		</div>
+	</div>
+</body>
+
+<script>
+	$(document).ready(function () {
+    	$('#logo').addClass('animated fadeInDown');
+    	$("input:text:visible:first").focus();
+	});
+	$('#username').focus(function() {
+		$('label[for="username"]').addClass('selected');
+	});
+	$('#username').blur(function() {
+		$('label[for="username"]').removeClass('selected');
+	});
+	$('#password').focus(function() {
+		$('label[for="password"]').addClass('selected');
+	});
+	$('#password').blur(function() {
+		$('label[for="password"]').removeClass('selected');
+	});
+</script>
+<script src="https://s3.amazonaws.com/stitch-sdks/js/library/v3/stable/stitch.min.js"></script>
+<script>
+  
+  function register(){
+	const clientPromise = stitch.StitchClientFactory.create('loginpage-hxdge');
+	clientPromise.then(client => {
+		const db = client.service('mongodb', 'mongodb-atlas').db('WebsiteDB');
+		client.register(document.getElementById("username").value, document.getElementById("password").value)
+		.then(() => {
+			console.log("Successfully sent account confirmation email!");
+			/* code to direct user to check their email */
+		})
+		.catch(err => {
+			console.log("Error registering new user:", err);
+		});
+	});
+  }
+
+  function login(){
+	const clientPromise = stitch.StitchClientFactory.create('loginpage-hxdge');
+	clientPromise.then(client => {
+			const db = client.service('mongodb', 'mongodb-atlas').db('WebsiteDB');
+			client.login(document.getElementById("username").value, document.getElementById("password").value)
+		.then(userId => {
+			console.log("Successfully logged in as user", userId);
+		})
+		.catch(err => {
+			console.log("Error logging in with email/password auth:", err);
+		});
+	});
+  }
+</script>
+
+</html>
