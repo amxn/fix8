@@ -3,10 +3,10 @@
 
 <head>
 	<meta charset="utf-8">
-	<title>SCP MongoDB Website</title>
+	<title>fix8 App website</title>
 
 	<!-- Google Fonts -->
-	<link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700|Lato:400,100,300,700,900' rel='stylesheet' type='text/css'>
+	<link href='https://fonts.googleapis.com/css?family=Nunito:300,400,700|Lato:400,100,300,700,900' rel='stylesheet' type='text/css'>
 
 	<link rel="stylesheet" href="css/animate.css">
 	<!-- Custom Stylesheet -->
@@ -17,9 +17,7 @@
 
 <body>
 	<div class="container">
-		<div class="top">
-			<h1 id="title" class="hidden"><span id="logo">SCP Website<span>With MongoDB</span></span></h1>
-		</div>
+		<h1 id="title" class="hidden"><span id="logo"><span>fix8</span></span></h1>
 		<div class="login-box animated fadeInUp">
 			<div class="box-header">
 				<h2>Register</h2>
@@ -63,30 +61,30 @@
 <script>
   
   function register(){
-	const clientPromise = stitch.StitchClientFactory.create('loginpage-hxdge');
+	const clientPromise = stitch.StitchClientFactory.create('testapplication-jxvbl');
 	clientPromise.then(client => {
 		const db = client.service('mongodb', 'mongodb-atlas').db('WebsiteDB');
 		client.register(document.getElementById("username").value, document.getElementById("password").value)
 		.then(() => {
-			console.log("Successfully sent account confirmation email!");
+			alert("Successfully sent account confirmation email!");
 			/* code to direct user to check their email */
 		})
 		.catch(err => {
-			console.log("Error registering new user:", err);
+			alert("Error registering new user:", err);
 		});
 	});
   }
 
   function login(){
-	const clientPromise = stitch.StitchClientFactory.create('loginpage-hxdge');
+	const clientPromise = stitch.StitchClientFactory.create('testapplication-jxvbl');
 	clientPromise.then(client => {
 			const db = client.service('mongodb', 'mongodb-atlas').db('WebsiteDB');
 			client.login(document.getElementById("username").value, document.getElementById("password").value)
 		.then(userId => {
-			console.log("Successfully logged in as user", userId);
+			alert("Successfully logged in as user", userId);
 		})
 		.catch(err => {
-			console.log("Error logging in with email/password auth:", err);
+			alert("Error logging in with email/password auth:", err);
 		});
 	});
   }
